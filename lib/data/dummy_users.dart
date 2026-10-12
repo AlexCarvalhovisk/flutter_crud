@@ -5,14 +5,14 @@ const DUMMY_USERS = {
     id: '1',
     nome: 'Maria',
     email: 'maria@alunos.com.br',
-    avatarUrl: 'https://pixabay.com/pt/illustrations/garota-telefone-celular-jogar-8158685/',
+    avatarUrl: 'https://pixabay.com/pt/illustrations/garota-confiante-retrato-3316342/',
   ),
 
   '2': const User(
     id: '2',
     nome: 'Rafael',
     email: 'rafael@alunos.com.br',
-    avatarUrl: 'https://pixabay.com/pt/illustrations/campon%C3%AAs-desenho-agricultor-4361592/',
+    avatarUrl: 'https://pixabay.com/pt/vectors/meditar-garoto-desenho-animado-ioga-7172895/',
   ),
 
   '3': const User(
