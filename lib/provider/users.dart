@@ -7,12 +7,8 @@ import 'package:flutter_crud/models/user.dart';
 class Users with ChangeNotifier {
   final Map<String, User> _itens = {...DUMMY_USERS};
 
-  //Por que é feito um clone dessa lista? Porque eu não quis retornar uma referência para esse MAP itens?
-  // Porque se eu retorno uma referência para o itens,
-  // qualquer outra parte da aplicação pode ter acesso e alterar ele sem que eu seja notificado por isso fiz o clone dele.
-
+  // Retorna uma cópia da lista de usuários.
   List<User> get all {
-    //Eu sempre vou retornar o clone, pois sempre que eu mexer nele, a classe real precisa participar.
     return [..._itens.values];
   }
 
@@ -25,34 +21,32 @@ class Users with ChangeNotifier {
   }
 
   void put(User user) {
-    if (user == null) {
-      return;
-    }
+    final id = user.id;
 
-    if (user.id != null &&
-        user.id.trim().isNotEmpty &&
-        _itens.containsKey(user.id)) {
-      _itens.update(user.id, (_) => user);
-      //insere caso não esteja atendendo aos requisitos (ADICIONAR).
+    if (id != null && id.trim().isNotEmpty && _itens.containsKey(id)) {
+      // Atualiza um usuário existente.
+      _itens.update(id, (_) => user);
     } else {
-      final id = Random().nextDouble().toString();
-      _itens.putIfAbsent(
-        id,
-        () => User(
-          id: id,
-          nome: user.nome,
-          email: user.email,
-          avatarUrl: user.avatarUrl,
-        ),
+      // Cria um novo usuário com um ID gerado.
+      final newId = Random().nextInt(1 << 32).toString();
+
+      _itens[newId] = User(
+        id: newId,
+        nome: user.nome,
+        email: user.email,
+        avatarUrl: user.avatarUrl,
       );
     }
+
     notifyListeners();
   }
 
-  //Remover usuario
-  void remove(User user){
-    if(user !=null && user.id != null){
-      _itens.remove(user.id);
+  // Remove um usuário pelo seu ID.
+  void remove(User user) {
+    final id = user.id;
+
+    if (id != null && _itens.containsKey(id)) {
+      _itens.remove(id);
       notifyListeners();
     }
   }
